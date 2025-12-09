@@ -22,6 +22,7 @@ I’m still getting the hang of more advanced tools (and their etiquette), like 
 - Discord API
 - SQLite (very basic)
 - Software architecture
+- RESTful API's
 
 ## What I am learning
 - Best practices of Git
