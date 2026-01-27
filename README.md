@@ -10,9 +10,12 @@ I’m still getting the hang of more advanced tools (and their etiquette), like 
 ## What I've been working on
 - **[Franktorio Pressure Scanner](https://github.com/Franktorio/franktorio-pressure-scanner)**  
   Tool to gather and observe collected data for the Roblox game *Pressure*.
+  - Has gathered over 50k room encounters
+  - [Data Website](https://franktorio.dev/frd-api/franktorio-scanner/data)
 
 - **[Franktorio & xSoul's Lab](https://github.com/Franktorio/franktorio-xsouls-lab)**  
   Discord bot that displays data and provides backend support for the scanner above.
+  - [Bot's Website](https://franktorio.dev/frd-api/)
 
 - **[Franktorio TBS Bot](https://github.com/Franktorio/franktorio-tbs-bot)**  
   Work in progress.
