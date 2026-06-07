@@ -16,7 +16,7 @@ I’m still getting the hang of more advanced tools (and their etiquette), like 
   - Manages database automatically
   - Sandboxed code (without virtualization)
 
-## Previous Projects (No longer maintaned; abandoned due to issues with Pressure itself.)
+## Previous Projects (No longer maintained; abandoned due to issues with Pressure itself.)
 - **[Franktorio Pressure Scanner](https://github.com/Franktorio/franktorio-pressure-scanner)**  
   Tool to gather and observe collected data for the Roblox game *Pressure*.
   - Gathered over 200k room encounters
