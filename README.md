@@ -2,17 +2,17 @@
 
 # Franktorio
 
-### Python · Async APIs · Database services · Web applications
+### Python · TypeScript · Application architecture · Database systems
 
-I build FastAPI backends, database layers, and React frontends, with a focus on authentication, application workflows, and shared service infrastructure.
+I build applications from the data model through the API and frontend: business management systems, gym platforms, automated grading, and data collection tools.
 
 ![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
-![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
 ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-[Current systems](#current-systems) · [Stack](#stack) · [Public repositories](#public-repositories)
+[Current systems](#current-systems) · [Architecture](#architecture-and-infrastructure) · [Public repositories](#public-repositories)
 
 </div>
 
@@ -20,53 +20,79 @@ I build FastAPI backends, database layers, and React frontends, with a focus on 
 
 ## Current systems
 
-| Codebase | Architecture and scope |
+### Maciel Romo
+
+A consolidated **business operations platform** with a bilingual public website, storefront, and permission-scoped employee portal.
+
+| Domain | Application scope |
 | :--- | :--- |
-| **Maciel Romo** | React + Vite frontend with a FastAPI API, async SQLAlchemy, and PostgreSQL. Public site and employee portal backed by workshop, catalog, inventory, purchasing, sales, finance, and reporting modules. |
-| **Barras Armadas** | FastAPI + PostgreSQL + Redis backend with a React frontend. Domain APIs for class scheduling, reservations, memberships, workout definitions, exercise results, and member preferences. |
-| **Database service** | Reusable backend foundation for authentication, authorization, database access, audit logging, monitoring, and transactional email. Shared implementations maintained across the application codebases. |
+| **Retail operations** | Multi-store inventory, product variants, replenishment, purchasing, point-of-sale workflows, and store-level employee assignments. |
+| **Production / workshop** | Orders and backlog, artwork status, work assignments, production progress, materials, losses, shipping, and receipt of goods by stores. |
+| **Finance** | Sales and purchase records, expenses and salaries, daily cash closes, store balances, capital transactions, profit reporting, and company-level dashboards. |
+| **Commerce** | Product publishing, customer accounts, checkout, order administration, payment handling, shipping quotations, and customer inquiries. |
+| **Web development operations** | Application records, employee assignments, billing, support tickets, and remote service monitoring. |
+| **Administration** | Employee access, granular permissions, internal notifications, and audit history. |
 
-### Shared backend work
+**React + TypeScript + Vite** frontend, **FastAPI** API, and **PostgreSQL** persistence through async **SQLAlchemy**. Public pages and the employee portal share a frontend build, with separate session and access boundaries.
 
-- **Sessions:** signed JWT cookies with stable session IDs, explicit renewal through `POST /me/refresh`, expiry validation, revocation, and permission-cache invalidation.
-- **Email:** shared Brevo HTTP transport with asynchronous dispatch, validated responses, configurable sender identity, and application-specific templates.
-- **Outbound HTTP:** destination validation, DNS pinning, TLS hostname verification, redirect rejection, request/response size limits, and connection/read timeouts.
-- **Monitoring:** a versioned remote metrics contract and structured HTTP operation/failure logs.
-- **Regression coverage:** GitHub Actions checks for session routes, token renewal, email transport, outbound HTTP protections, and monitoring behavior.
+### Barras Armadas
 
-Domain logic, session lifetimes, and Redis implementations remain application-specific. These codebases are currently private.
+A **gym management and training platform** connecting public enrollment with member, coach, and administrator interfaces.
 
-## Stack
-
-| Layer | Technologies |
+| Domain | Application scope |
 | :--- | :--- |
-| **API / runtime** | Python · FastAPI · Uvicorn · asyncio · REST |
-| **Persistence** | PostgreSQL · SQLAlchemy 2 async · asyncpg · Alembic · SQLite |
-| **Cache / access controls** | Redis · JWT cookies · role-based authorization · rate limiting |
-| **Frontend** | React · Vite · Jinja2 |
-| **Integrations** | Brevo HTTP API · Discord API |
-| **Tooling / operations** | Git · GitHub Actions · unittest · logging · monitoring · database backups |
+| **Member lifecycle** | Enrollment, account activation, membership management, reactivation, profiles, and preferences. |
+| **Scheduling / attendance** | Class definitions, recurring schedule presets, capacity and role restrictions, reservations, and reservation history. |
+| **Training data** | Exercise and workout catalogs, ordered workout tasks, benchmark definitions, recorded results, personal records, and leaderboards. |
+| **Staff operations** | Coach interfaces, member administration, product tabs, schedule management, and operational metrics. |
+
+**React + TypeScript + Vite** frontend backed by **FastAPI, PostgreSQL, and Redis**, with domain APIs and role-scoped interfaces.
+
+### Database service
+
+An extensible **application backend foundation** used by the systems above. Product modules build on a common system layer for identity, access control, persistence, and operations.
+
+- **Identity and access:** user and role management, tiered API keys, password hashing, browser sessions, and server-side revocation.
+- **Request controls:** Redis-backed rate limiting, permission caching, IP blocking, and write-path cache invalidation.
+- **Persistence:** async database sessions, ORM models, dedicated CRUD modules, migrations, and audit records.
+- **Operations:** scheduled PostgreSQL backups with retention, health checks, configurable recovery, session cleanup, rotating logs, and supervised background tasks with restart backoff.
+- **Integration services:** transactional email, outbound HTTP validation, and a versioned monitoring interface.
+- **Deployment tooling:** environment validation, typed service configuration, database/cache provisioning scripts, and backup restore utilities.
+
+The three codebases share infrastructure conventions while retaining application-specific data models, workflows, permissions, and Redis behavior. Their repositories are currently private.
+
+## Architecture and infrastructure
+
+| Layer | Approach / technologies |
+| :--- | :--- |
+| **Frontend** | React · TypeScript · Vite · routed public and authenticated interfaces · Jinja2 in the grading application |
+| **API** | Python · FastAPI · Uvicorn · asyncio · validated request models · REST endpoints |
+| **Data** | PostgreSQL · SQLAlchemy 2 async · asyncpg · Alembic · SQLite |
+| **Application boundaries** | Domain routers and CRUD modules · explicit database sessions · role and assignment scopes |
+| **Infrastructure** | Redis caching and Lua operations · background task supervision · backups and recovery |
+| **Integrations** | Discord API · Brevo · Stripe · shipping quotation services |
+| **Verification / operations** | GitHub Actions · automated regression tests · audit logs · metrics · Nginx and systemd deployment configuration |
 
 ## Public repositories
 
 ### [Bulldog Simple Grader](https://github.com/Franktorio/bulldog-simple-grader)
 
-A code-submission and automated evaluation system built with **FastAPI, Jinja2, and SQLite**.
+An **assignment, code-submission, and automated evaluation system** built with FastAPI, Jinja2, and SQLite.
 
-- Linux namespace isolation using `unshare`, network restrictions, and CPU/memory limits.
-- Assignment test suites, submission tracking, and separate instructor/student routes.
-- Database initialization, backups, replicas, and recovery tooling.
+Instructors define assignments and test suites; students submit files through a web interface. The evaluation pipeline runs submissions in Linux namespaces using `unshare`, with network isolation and CPU/memory limits, then records results for instructor review.
+
+Includes dedicated student/instructor authentication, submission and completion tracking, database initialization, rotating logs, backups, replicas, and recovery tooling.
 
 <details>
-<summary><strong>Earlier systems: data collection and Discord integration</strong></summary>
+<summary><strong>Data collection and Discord systems</strong></summary>
 
 ### [Franktorio Pressure Scanner](https://github.com/Franktorio/franktorio-pressure-scanner)
 
-Data collection and analysis tooling for the Roblox game *Pressure*, with **200,000+ recorded room encounters**.
+Collection and analysis tooling for the Roblox game *Pressure*, with **200,000+ recorded room encounters**.
 
 ### [Franktorio & xSoul's Lab](https://github.com/Franktorio/franktorio-xsouls-lab)
 
-Discord integration for querying collected data and supporting the scanner backend.
+A Discord bot for querying collected data and supporting the scanner backend.
 
 These projects are no longer maintained; their former web endpoints are offline.
 
@@ -74,5 +100,5 @@ These projects are no longer maintained; their former web endpoints are offline.
 
 ## Exploring
 
-Shared service boundaries, authentication edge cases, async database access, and regression testing across multiple applications. Also expanding my experience with AWS and Cloudflare.
+Application architecture, data consistency, async service design, and infrastructure that can be reused across codebases. Also expanding my experience with AWS and Cloudflare.
   
