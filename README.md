@@ -1,87 +1,78 @@
 <div align="center">
 
-# Hi, I'm Franktorio 👋
+# Franktorio
 
-### Building software for the way people actually work.
+### Python · Async APIs · Database services · Web applications
 
-**Python developer · Web applications · Backend systems**
+I build FastAPI backends, database layers, and React frontends, with a focus on authentication, application workflows, and shared service infrastructure.
 
-From community data tools to business operations, I turn practical problems into working software.
+![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)
+![Redis](https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=redis&logoColor=white)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
 
-[![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](#-my-toolbox)
-[![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)](#-my-toolbox)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](#-my-toolbox)
-[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](#-my-toolbox)
-
-[Current work](#-what-im-building-now) · [Public projects](#-selected-public-projects) · [My toolbox](#-my-toolbox)
+[Current systems](#current-systems) · [Stack](#stack) · [Public repositories](#public-repositories)
 
 </div>
 
 ---
 
-## 🚀 What I'm building now
+## Current systems
 
-My current focus is web applications and backend services for real businesses: the public experience, the internal workflows, and the infrastructure connecting them.
-
-| Project | What I'm working on |
+| Codebase | Architecture and scope |
 | :--- | :--- |
-| **Maciel Romo** | A public website and internal management platform covering workshop operations, product catalogs, inventory, purchasing, sales, finance, and reporting. Built around a React + Vite frontend and a FastAPI backend. |
-| **Barras Armadas** | A gym platform for classes, reservations, memberships, workouts, and results, with member and staff workflows backed by FastAPI, PostgreSQL, and Redis. |
-| **Shared backend foundation** | Reusable services across applications: authentication, permissions, session renewal, Brevo transactional email, outbound HTTP protections, and monitoring. |
+| **Maciel Romo** | React + Vite frontend with a FastAPI API, async SQLAlchemy, and PostgreSQL. Public site and employee portal backed by workshop, catalog, inventory, purchasing, sales, finance, and reporting modules. |
+| **Barras Armadas** | FastAPI + PostgreSQL + Redis backend with a React frontend. Domain APIs for class scheduling, reservations, memberships, workout definitions, exercise results, and member preferences. |
+| **Database service** | Reusable backend foundation for authentication, authorization, database access, audit logging, monitoring, and transactional email. Shared implementations maintained across the application codebases. |
 
-> **Recent focus:** synchronizing shared backend behavior across three codebases while keeping each application's business logic and Redis implementation independent.
+### Shared backend work
 
-These projects live in private repositories. My public work below shows other parts of my development journey.
+- **Sessions:** signed JWT cookies with stable session IDs, explicit renewal through `POST /me/refresh`, expiry validation, revocation, and permission-cache invalidation.
+- **Email:** shared Brevo HTTP transport with asynchronous dispatch, validated responses, configurable sender identity, and application-specific templates.
+- **Outbound HTTP:** destination validation, DNS pinning, TLS hostname verification, redirect rejection, request/response size limits, and connection/read timeouts.
+- **Monitoring:** a versioned remote metrics contract and structured HTTP operation/failure logs.
+- **Regression coverage:** GitHub Actions checks for session routes, token renewal, email transport, outbound HTTP protections, and monitoring behavior.
 
-## 🧰 My toolbox
+Domain logic, session lifetimes, and Redis implementations remain application-specific. These codebases are currently private.
 
-| Area | Tools and experience |
+## Stack
+
+| Layer | Technologies |
 | :--- | :--- |
-| **Backend** | Python · FastAPI · REST APIs · asynchronous services |
-| **Data** | PostgreSQL · SQLAlchemy · Alembic · Redis · SQLite |
-| **Web** | React · Vite · Jinja2 |
-| **Integrations** | Discord API · Brevo transactional email |
-| **Reliability** | GitHub Actions · automated tests · monitoring · logging · backups |
-| **Security** | role-based access · signed sessions · rate limiting · outbound request validation |
+| **API / runtime** | Python · FastAPI · Uvicorn · asyncio · REST |
+| **Persistence** | PostgreSQL · SQLAlchemy 2 async · asyncpg · Alembic · SQLite |
+| **Cache / access controls** | Redis · JWT cookies · role-based authorization · rate limiting |
+| **Frontend** | React · Vite · Jinja2 |
+| **Integrations** | Brevo HTTP API · Discord API |
+| **Tooling / operations** | Git · GitHub Actions · unittest · logging · monitoring · database backups |
 
-## 💻 Selected public projects
+## Public repositories
 
-### 🎓 [Bulldog Simple Grader](https://github.com/Franktorio/bulldog-simple-grader)
+### [Bulldog Simple Grader](https://github.com/Franktorio/bulldog-simple-grader)
 
-An automated grading application for computer science assignments: students submit code, instructors define tests, and a dashboard brings the results together.
+A code-submission and automated evaluation system built with **FastAPI, Jinja2, and SQLite**.
 
-**Python · FastAPI · Jinja2 · SQLite · Linux namespaces**
-
-- Isolated code execution with network restrictions and resource limits.
-- Student and instructor workflows.
-- Logging, database backups, and recovery tools.
+- Linux namespace isolation using `unshare`, network restrictions, and CPU/memory limits.
+- Assignment test suites, submission tracking, and separate instructor/student routes.
+- Database initialization, backups, replicas, and recovery tooling.
 
 <details>
-<summary><strong>🔎 Earlier work: community tools and data collection</strong></summary>
+<summary><strong>Earlier systems: data collection and Discord integration</strong></summary>
 
 ### [Franktorio Pressure Scanner](https://github.com/Franktorio/franktorio-pressure-scanner)
 
-A data collection tool for the Roblox game *Pressure* that gathered **more than 200,000 room encounters**.
+Data collection and analysis tooling for the Roblox game *Pressure*, with **200,000+ recorded room encounters**.
 
 ### [Franktorio & xSoul's Lab](https://github.com/Franktorio/franktorio-xsouls-lab)
 
-A Discord bot that presented collected data and provided backend support for the scanner.
+Discord integration for querying collected data and supporting the scanner backend.
 
-My earlier community work supported communities of around **10,000 and 3,000 members**. The Pressure projects are no longer maintained, and their former websites are offline.
+These projects are no longer maintained; their former web endpoints are offline.
 
 </details>
 
-## 🌱 How I work and what I'm learning
+## Exploring
 
-I learn by building, deploying, and improving real projects. I care about clear architecture, useful features, and software that remains manageable as it grows.
-
-Right now, I'm developing my approach to **security, testing, and shared service design**, while expanding my experience with **AWS and Cloudflare**.
-
----
-
-<div align="center">
-
-**Practical problems. Working software. Continuous improvement.**
-
-</div>
+Shared service boundaries, authentication edge cases, async database access, and regression testing across multiple applications. Also expanding my experience with AWS and Cloudflare.
   
